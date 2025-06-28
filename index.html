@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <title>Color Calendar</title>
+    <style>
+        :root {
+            touch-action: none !important;
+        }
+
+        .crt {
+            background: linear-gradient(to top, #000000, #000000, #222222, #222222);
+            background-size: cover;
+            background-size: 100% 6px;
+        }
+
+        @media screen {
+            .crt {
+                animation: scanlines infinite 2s linear;
+            }
+        }
+
+        @keyframes scanlines {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 0 -12px;
+            }
+        }
+
+        html,
+        body {
+            background-color: rgb(12, 12, 12);
+            padding: 0;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            align-content: center;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        div.day {
+            border-radius: 4%;
+            width: 25vw;
+            height: 25vw;
+            background-color: rgb(255, 255, 255, 0.5);
+            text-align: center;
+            align-content: center;
+            font-family: sans-serif;
+            font-size: 24px;
+            color: white;
+            text-shadow: 0px 0px 2px;
+            font-weight: bold;
+            box-shadow: 0px 0px 120px 1px rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="crt">
+    <div class="day">28 June, 2025</div>
+</body>
+
+</html>
