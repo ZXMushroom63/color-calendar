@@ -2,7 +2,24 @@
   "name": "Color Calendar",
   "short_name": "cal",
   "start_url": "./index.html",
-  "display": "standalone",
+  "display": "fullscreen",
   "background_color": "#000000",
-  "theme_color": "#ffffff"
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "img/ico192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "img/ico256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "img/ico512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
 }
