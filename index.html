@@ -97,6 +97,7 @@
         let firstDay = Date.now();
         let topDay = firstDay;
         const colors = ["white", "red", "yellow", "lime"];
+        const todayIdx = Math.floor(Date.now() / dayLen);
         function populateDays() {
             flinger.innerHTML = "";
             let lastDay = firstDay - (dayLen * 3);
@@ -114,6 +115,9 @@
                     d.style.setProperty("--day-color", colors[value] || "white")
                     localStorage.setItem("ccal:" + dayId, value);
                 });
+                if (dayId === todayIdx) {
+                    d.style.border = "2px solid var(--day-color)";
+                }
                 flinger.appendChild(d);
             }
             flinger.scrollTop = flinger.scrollHeight * (3 / 8);
