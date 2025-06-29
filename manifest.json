@@ -1,6 +1,6 @@
 {
   "name": "Color Calendar",
-  "short_name": "cal",
+  "short_name": "CCal",
   "start_url": "./index.html",
   "display": "fullscreen",
   "background_color": "#000000",
