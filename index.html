@@ -73,47 +73,45 @@
         #surface_flinger {
             overflow-y: scroll;
             overflow-x: hidden;
-            height: calc(100vh - 12.5vh);
+            height: calc(100vh - 25vh);
             width: 100vw;
-            padding-top: 12.5vh;
+            padding-top: 25vh;
         }
     </style>
 </head>
 
 <body class="crt">
     <div id="surface_flinger">
-        <div class="day">28 June, 2025</div>
-        <div class="day">27 June, 2025</div>
-        <div class="day">26 June, 2025</div>
     </div>
     <script>
         const flinger = document.querySelector("#surface_flinger");
 
         const dayLen = 1000 * 60 * 60 * 23.9344694444444445;
-        let firstDay = Math.floor(Date.now() / dayLen);
+        let firstDay = Date.now();
+        let topDay = firstDay;
         function populateDays() {
             flinger.innerHTML = "";
             let lastDay = firstDay - (dayLen * 3);
-            for (let i = firstDay; i > lastDay; i-=dayLen) {
+            for (let i = firstDay + (dayLen * 2); i > lastDay; i-=dayLen) {
                 const date = new Date(i);
                 const d = document.createElement("div");
                 d.classList.add("day");
-                d.innerText = date.toString();
+                d.innerText = `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })}, ${date.getFullYear()}`;
                 flinger.appendChild(d);
             }
-            console.log(flinger.scrollTop * 0.4);
-            console.log(flinger.scrollTop);
-            flinger.scrollTop *= 0.4;
+            flinger.scrollTop = flinger.scrollHeight * (3/8) + 1;
         }
 
-        console.log("code!");
         flinger.addEventListener("scroll", () => {
-            console.log("scrolling", flinger.scrollHeight, flinger.scrollTop);
-            if (flinger.scrollHeight < (flinger.scrollTop * 2)) {
+            if (((flinger.scrollTop - 1)/flinger.scrollHeight) > (4.5/8)) {
                 firstDay -= dayLen;
+                populateDays();
+            } else if ((flinger.scrollTop/flinger.scrollHeight) < (1.5/8)) {
+                firstDay += dayLen;
                 populateDays();
             }
         });
+        populateDays();
     </script>
 </body>
 
