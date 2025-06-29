@@ -47,11 +47,12 @@
         }
 
         div.day {
+            --day-color: white;
             display: inline-block;
             border-radius: 4%;
             width: 50vh;
             height: 50vh;
-            background-color: rgb(255, 255, 255, 0.5);
+            background-color: color-mix(in srgb, var(--day-color), transparent);
             text-align: center;
             align-content: center;
             font-family: sans-serif;
@@ -61,7 +62,7 @@
             margin-right: calc(50vw - 25vh);
             text-shadow: 0px 0px 2px;
             font-weight: bold;
-            box-shadow: 0px 0px 120px 1px rgba(255, 255, 255, 0.5);
+            box-shadow: 0px 0px 120px 1px color-mix(in srgb, var(--day-color), transparent);
             cursor: pointer;
             margin-bottom: 25vh;
         }
@@ -89,14 +90,24 @@
         const dayLen = 1000 * 60 * 60 * 23.9344694444444445;
         let firstDay = Date.now();
         let topDay = firstDay;
+        const colors = ["white", "red", "yellow", "lime"];
         function populateDays() {
             flinger.innerHTML = "";
             let lastDay = firstDay - (dayLen * 3);
             for (let i = firstDay + (dayLen * 2); i > lastDay; i -= dayLen) {
+                const dayId = Math.floor(i / dayLen);
                 const date = new Date(i);
                 const d = document.createElement("div");
                 d.classList.add("day");
+                let value = parseInt(localStorage.getItem("ccal:" + dayId) || 0);
+                d.style.setProperty("--day-color", colors[value] || "white");
                 d.innerText = `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })}, ${date.getFullYear()}`;
+                d.addEventListener("click", () => {
+                    value++;
+                    value = value % colors.length;
+                    d.style.setProperty("--day-color", colors[value] || "white")
+                    localStorage.setItem("ccal:" + dayId, value);
+                });
                 flinger.appendChild(d);
             }
             flinger.scrollTop = flinger.scrollHeight * (3 / 8);
