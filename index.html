@@ -42,29 +42,79 @@
             height: 100vh;
             align-content: center;
             user-select: none;
+            overflow: hidden;
             -webkit-user-drag: none;
         }
 
         div.day {
+            display: inline-block;
             border-radius: 4%;
-            width: 25vw;
-            height: 25vw;
+            width: 50vh;
+            height: 50vh;
             background-color: rgb(255, 255, 255, 0.5);
             text-align: center;
             align-content: center;
             font-family: sans-serif;
             font-size: 24px;
             color: white;
+            margin-left: calc(50vw - 25vh);
+            margin-right: calc(50vw - 25vh);
             text-shadow: 0px 0px 2px;
             font-weight: bold;
             box-shadow: 0px 0px 120px 1px rgba(255, 255, 255, 0.5);
             cursor: pointer;
+            margin-bottom: 25vh;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        #surface_flinger {
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: calc(100vh - 12.5vh);
+            width: 100vw;
+            padding-top: 12.5vh;
         }
     </style>
 </head>
 
 <body class="crt">
-    <div class="day">28 June, 2025</div>
+    <div id="surface_flinger">
+        <div class="day">28 June, 2025</div>
+        <div class="day">27 June, 2025</div>
+        <div class="day">26 June, 2025</div>
+    </div>
+    <script>
+        const flinger = document.querySelector("#surface_flinger");
+
+        const dayLen = 1000 * 60 * 60 * 23.9344694444444445;
+        let firstDay = Math.floor(Date.now() / dayLen);
+        function populateDays() {
+            flinger.innerHTML = "";
+            let lastDay = firstDay - (dayLen * 3);
+            for (let i = firstDay; i > lastDay; i-=dayLen) {
+                const date = new Date(i);
+                const d = document.createElement("div");
+                d.classList.add("day");
+                d.innerText = date.toString();
+                flinger.appendChild(d);
+            }
+            console.log(flinger.scrollTop * 0.4);
+            console.log(flinger.scrollTop);
+            flinger.scrollTop *= 0.4;
+        }
+
+        console.log("code!");
+        flinger.addEventListener("scroll", () => {
+            console.log("scrolling", flinger.scrollHeight, flinger.scrollTop);
+            if (flinger.scrollHeight < (flinger.scrollTop * 2)) {
+                firstDay -= dayLen;
+                populateDays();
+            }
+        });
+    </script>
 </body>
 
 </html>
